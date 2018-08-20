@@ -1,0 +1,67 @@
+#MULTIPLE LINEAR REGRESSION
+
+#data preprocessing
+
+#importing the dataset
+
+dataset = read.csv ("50_Startups.csv")
+#dataset=dataset[,2:3]
+
+#encoding categorical data
+
+dataset$Country= factor(dataset$Country,levels=c('New York','California','Florida'),
+                        labels=c('1','2','3'))
+
+
+#splitting the dataset
+
+#installing packages
+
+#install.packages('caTools')
+library(caTools)
+
+set.seed(123)
+split=sample.split(dataset$Profit, SplitRatio=0.8)
+
+#to create training and test sets separately
+
+training_set= subset(dataset, split==TRUE)
+test_set= subset(dataset, split==FALSE)
+
+#FEATURE SCALING
+
+#training_set[,2:3]=scale(training_set [,2:3])
+#test_set[,2:3]=scale(test_set [,2:3])
+
+#FITTING MULTIPLE LINEAR REGRESSION 
+
+regressor= lm(formula = Profit ~ ., data = training_set)
+
+#PREDICTING THE TEST SET RESULTS
+
+ypred = predict(regressor, newdata = test_set)
+
+#BUILDING OPTIMUM MODEL USING BACKWARD ELIMINTION
+
+regressor= lm( formula = Profit ~ R.D.Spend + Administration + Marketing.Spend + State , data = dataset)
+summary(regressor)
+
+#removing predictor with least statistical stability(p>sl) i.e highest p value
+#removing state
+
+regressor= lm(formula = Profit ~ R.D.Spend + Administration + Marketing.Spend, data = dataset)
+summary(regressor)
+
+#removing administration
+
+regressor= lm(formula = Profit ~ R.D.Spend + Marketing.Spend, data = dataset)
+summary(regressor)
+
+#removing marketing spend
+
+regressor= lm(formula = Profit ~ R.D.Spend, data = dataset)
+summary(regressor)
+
+
+
+

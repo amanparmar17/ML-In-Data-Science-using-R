@@ -1,0 +1,80 @@
+#NON LINEAR REGRESSION TEMPLATE
+
+#data preprocessing
+#importing the dataset
+
+dataset = read.csv("Position_Salaries.csv")
+
+#level and designation are encoded commonly , hence eliminating designation and keeping the other two
+
+dataset=dataset[2:3]
+
+#splitting the dataset (no need as small data)
+#installing packages
+
+#install.packages('caTools')
+#library(caTools)
+
+#set.seed(123)
+#split=sample.split(dataset$Purchased, SplitRatio=0.8)
+
+#to create training and test sets separately
+
+#training_set= subset(dataset, split==TRUE)
+#test_set= subset(dataset, split==FALSE)
+
+#FEATURE SCALING (no need as small data)
+
+#training_set[,2:3]=scale(training_set [,2:3])
+#test_set[,2:3]=scale(test_set [,2:3])
+
+#APPLYING REGRESSION MODEL
+
+#CREATING YOUR REGRESSOR
+
+#poly_reg = lm( formula = Salary ~ ., data = dataset) 
+
+
+#MAKE PREDICTION USING REG.MODEL OF SINGLE VALUE NOT VECTOR
+
+y_pred =predict( regressor , data.frame(Independent variable=6.5))
+                
+
+#VISUALISING REGRESSION RESULTS
+#install.packages('ggplot2')
+library(ggplot2)
+
+ggplot() +
+  geom_point(aes(x = dataset$Independent variable, y=dataset$Dependent variable), colour= 'red')+
+  
+  geom_line(aes(x = dataset$independent variable , y= predict(regressor, newdata = dataset)), colour= 'blue')+
+  
+  ggtitle('Truth or Bluff (Regression Model)+
+  
+  xlab('independent variable')+
+  
+  ylab('dependent variable')
+
+
+
+#VISUALISING REGRESSION RESULTS FOR SMOOTHER CURVES(high resolution) WITH HIGH DEFINITION COMPLEX DATA 
+#HERE WE TAKE INTERVALS OF 0.1 TO SMOOTHEN THE DATA
+
+#install.packages('ggplot2')
+library(ggplot2)
+
+x_grid= seq(min(dataset$independent variable), max(dataset$independent variable), 0.1 #INTERVAL)
+
+ggplot() +
+  geom_point(aes(x = dataset$Independent variable, y=dataset$Dependent variable), colour= 'red')+
+          
+  geom_line(aes(x = dataset$independent variable , y= predict(regressor, newdata = data.frame( independent variable = x_grid))), colour= 'blue')+
+          
+  ggtitle('Truth or Bluff (Regression Model)+
+            
+  xlab('independent variable')+
+            
+  ylab('dependent variable')
+
+
+
